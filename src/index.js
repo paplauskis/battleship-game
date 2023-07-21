@@ -50,16 +50,35 @@ function Gameboard() {
 
   const placeShip = (shipType, coord) => {
     const ship = identifyShip(shipType)
+
+    if (checkIfShipFits(ship, coord)) {
     placeShipOnCoordinate(ship, coord)
+    } else console.log("ship doesn't fit in desired coordinate")
   }
 
-  const placeShipOnCoordinate = (ship, coord) => {
+  const checkIfShipFits = (ship, coord) => {
+    return ship.length <= coord.substring(1)
+  }
+
+  const placeShipOnCoordinate = (ship, coord, placedCells = 0) => {
+    if (!Array.isArray(ship.value)) {
+      ship.value = []
+    }
+
     coordinates.forEach((item) => {
       if (item.name === coord) {
-        ship.value = coord
+        ship.value.push(coord)
         item.value = ship
       }
     })
+
+    if (ship.length + placedCells <= ship.length) {
+      let newCord = coord.substring(1)
+      for (let i = 2; i <= ship.length; i++) {
+        const newCoord = `${coord.substring(0, 1)}${--newCord}`
+        placeShipOnCoordinate(ship, newCoord, ++placedCells)
+      }
+    } 
   }
   return { placeShip, coordinates }
 }
