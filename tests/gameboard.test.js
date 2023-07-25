@@ -175,21 +175,21 @@ test('should correctly check if all ships have been sunk', () => {
   gameboard.placeShip('battleship', 'a5')
   gameboard.placeShip('submarine', 'i10')
 
-  expect(gameboard.checkIfAllShipsAreSunk()).not.toBe('all ships have been sunk')
+  expect(gameboard.checkIfAllShipsAreSunk()).toBe(false)
 
   gameboard.receiveAttack('a5')
   gameboard.receiveAttack('a4')
   gameboard.receiveAttack('a3')
 
-  expect(gameboard.checkIfAllShipsAreSunk()).not.toBe('all ships have been sunk')
+  expect(gameboard.checkIfAllShipsAreSunk()).toBe(false)
 
   gameboard.receiveAttack('a2')
 
-  expect(gameboard.checkIfAllShipsAreSunk()).not.toBe('all ships have been sunk')
+  expect(gameboard.checkIfAllShipsAreSunk()).toBe(false)
 
   gameboard.receiveAttack('i10')
   gameboard.receiveAttack('i9')
   gameboard.receiveAttack('i8')
 
-  expect(gameboard.checkIfAllShipsAreSunk()).toBe('all ships have been sunk')
+  expect(gameboard.checkIfAllShipsAreSunk()).toBe(true)
 })
