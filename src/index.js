@@ -100,7 +100,26 @@ function Gameboard() {
 
   }
 
-  return { placeShip, coordinates, receiveAttack }
+  const checkIfAllShipsAreSunk = () => {
+    let remainingShipCoords = 0;
+    coordinates.forEach(item => {
+      if(typeof item.value === 'object' && item.value !== null)
+        remainingShipCoords++
+    })
+    if (remainingShipCoords === 0)
+      return 'all ships have been sunk'
+  }
+
+  return { placeShip, coordinates, receiveAttack, checkIfAllShipsAreSunk }
 }
-console.log(Gameboard().coordinates)
+
+// const myGameboard = Gameboard()
+// myGameboard.placeShip('submarine', 'a4')
+// myGameboard.placeShip('destroyer', 'c4')
+// myGameboard.placeShip('battleship', 'c10')
+// myGameboard.placeShip('carrier', 'i8')
+// myGameboard.receiveAttack('a5')
+// myGameboard.receiveAttack('a4')
+// console.log(myGameboard.checkIfAllShipsAreSunk())
+// console.log(myGameboard.coordinates)
 module.exports = { Ship, identifyShip, createGameboard: createGameboardCoords, Gameboard }
