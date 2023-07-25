@@ -106,3 +106,64 @@ test('should not place ships if they go out of the board (too high)', () => {
 
   expect(updatedCoordinates[90].value).toBeNull()
 })
+
+test('should know if attacked coordinate is not a ship', () => {
+  const gameboard = Gameboard()
+
+  gameboard.placeShip('battleship', 'c5')
+  gameboard.placeShip('submarine', 'f8')
+
+  gameboard.receiveAttack('c6')
+  gameboard.receiveAttack('c1')
+  gameboard.receiveAttack('f5')
+  gameboard.receiveAttack('f9')
+  gameboard.receiveAttack('i8')
+  gameboard.receiveAttack('g7')
+
+
+  const updatedCoordinates = gameboard.coordinates
+
+  expect(updatedCoordinates[25].value).toBe('missed')
+
+  expect(updatedCoordinates[20].value).toBe('missed')
+
+  expect(updatedCoordinates[54].value).toBe('missed')
+
+  expect(updatedCoordinates[58].value).toBe('missed')
+
+  expect(updatedCoordinates[87].value).toBe('missed')
+
+  expect(updatedCoordinates[66].value).toBe('missed')
+})
+
+test('should know if attacked coordinate is a ship', () => {
+  const gameboard = Gameboard()
+
+  gameboard.placeShip('battleship', 'a5')
+  gameboard.placeShip('submarine', 'i10')
+
+  gameboard.receiveAttack('a2')
+  gameboard.receiveAttack('a3')
+  gameboard.receiveAttack('a4')
+  gameboard.receiveAttack('a5')
+  gameboard.receiveAttack('i8')
+  gameboard.receiveAttack('i9')
+  gameboard.receiveAttack('i10')
+
+
+  const updatedCoordinates = gameboard.coordinates
+
+  expect(updatedCoordinates[1].value).toBe('hit')
+
+  expect(updatedCoordinates[2].value).toBe('hit')
+
+  expect(updatedCoordinates[3].value).toBe('hit')
+
+  expect(updatedCoordinates[4].value).toBe('hit')
+
+  expect(updatedCoordinates[87].value).toBe('hit')
+
+  expect(updatedCoordinates[88].value).toBe('hit')
+
+  expect(updatedCoordinates[89].value).toBe('hit')
+})
