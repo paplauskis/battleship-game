@@ -1,7 +1,6 @@
 const { Player, Computer, Gameboard } = require('../src/index')
 
-test('player can attack computer\'s gameboard', () => {
-  
+test("player can attack computer's gameboard", () => {
   const computerGameboard = Gameboard()
   const player = Player()
 
@@ -29,45 +28,43 @@ test('player can attack computer\'s gameboard', () => {
   expect(updatedCoordinates[93].value).toMatch('missed')
 })
 
-test('computer can attack player\'s gameboard', () => {
-  
+test("computer can attack player's gameboard", () => {
   const playerGameboard = Gameboard()
   const computer = Computer()
-  
+
   playerGameboard.placeShip('carrier', 'f5')
   playerGameboard.placeShip('submarine', 'g10')
-  
+
   const updatedCoordinates = playerGameboard.coordinates
 
-  let mockMath = Object.create(global.Math);
-  mockMath.random = () => 0.5;
-  global.Math = mockMath;
-  
+  let mockMath = Object.create(global.Math)
+  mockMath.random = () => 0.5
+  global.Math = mockMath
+
   computer.attack(playerGameboard)
   expect(updatedCoordinates[50].value).toMatch('hit')
 
-  mockMath.random = () => 0.52;
+  mockMath.random = () => 0.52
   computer.attack(playerGameboard)
   expect(updatedCoordinates[52].value).toMatch('hit')
-  
-  mockMath.random = () => 0.55;
+
+  mockMath.random = () => 0.55
   computer.attack(playerGameboard)
   expect(updatedCoordinates[55].value).toMatch('missed')
 
-  mockMath.random = () => 0.69;
+  mockMath.random = () => 0.69
   computer.attack(playerGameboard)
   expect(updatedCoordinates[69].value).toMatch('hit')
 
-  mockMath.random = () => 0.67;
+  mockMath.random = () => 0.67
   computer.attack(playerGameboard)
   expect(updatedCoordinates[67].value).toMatch('hit')
 
-  mockMath.random = () => 0.64;
+  mockMath.random = () => 0.64
   computer.attack(playerGameboard)
   expect(updatedCoordinates[64].value).toMatch('missed')
 
-  mockMath.random = () => 0.7;
+  mockMath.random = () => 0.7
   computer.attack(playerGameboard)
   expect(updatedCoordinates[70].value).toMatch('missed')
-
 })

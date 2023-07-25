@@ -1,9 +1,9 @@
-const { identifyShip} = require('../src/index')
+const { identifyShip } = require('../src/index')
 
 test('should correctly identify carrier ship', () => {
   const ship = identifyShip('carrier')
   expect(ship.length).toBe(5)
-}) 
+})
 
 test('should correctly identify battleship', () => {
   const ship = identifyShip('battleship')

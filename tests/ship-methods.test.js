@@ -32,4 +32,3 @@ test('should correctly track if ship is sunk', () => {
   myShip.hit()
   expect(myShip.isSunk()).toBe(true)
 })
-

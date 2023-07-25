@@ -120,7 +120,6 @@ test('should know if attacked coordinate is not a ship', () => {
   gameboard.receiveAttack('i8')
   gameboard.receiveAttack('g7')
 
-
   const updatedCoordinates = gameboard.coordinates
 
   expect(updatedCoordinates[25].value).toBe('missed')
@@ -150,7 +149,6 @@ test('should know if attacked coordinate is a ship', () => {
   gameboard.receiveAttack('i9')
   gameboard.receiveAttack('i10')
 
-
   const updatedCoordinates = gameboard.coordinates
 
   expect(updatedCoordinates[1].value).toBe('hit')
@@ -167,7 +165,6 @@ test('should know if attacked coordinate is a ship', () => {
 
   expect(updatedCoordinates[89].value).toBe('hit')
 })
-
 
 test('should correctly check if all ships have been sunk', () => {
   const gameboard = Gameboard()
