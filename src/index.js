@@ -1,3 +1,5 @@
+const { appendPlayerCoordinateDivs, appendComputerCoordinateDivs } = require('./DOM-methods')
+
 function Ship(length) {
   let hitsTaken = 0
 
@@ -21,12 +23,13 @@ function createGameboardCoords() {
   const letterCoords = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
   const numberCoords = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
   const coords = []
-
+  let count = 0;
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
       const element = {}
       element.name = letterCoords[i].concat(numberCoords[j])
       element.value = null
+      appendPlayerCoordinateDivs(element.name, count++)
       coords.push(element)
     }
   }
@@ -138,6 +141,7 @@ function getComputerAttack() {
 }
 
 const myGameboard = Gameboard()
+// const enemyGameboard = Gameboard()
 // const computer = Computer()
 // myGameboard.placeShip('submarine', 'a4')
 // myGameboard.placeShip('destroyer', 'c4')
