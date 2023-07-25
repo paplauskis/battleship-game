@@ -10,7 +10,7 @@ test('first item should be a1', () => {
   expect(gameboard[0].name).toBe('a1')
 }) 
 
-test('last item should be a1', () => {
+test('last item should be j10', () => {
   expect(gameboard[99].name).toBe('j10')
 }) 
 
