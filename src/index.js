@@ -1,4 +1,5 @@
-const { appendPlayerCoordinateDivs, appendComputerCoordinateDivs } = require('./DOM-methods')
+// const { Game } = require('./game')
+const { createCoordinateDivs } = require('./DOM-methods')
 
 function Ship(length) {
   let hitsTaken = 0
@@ -23,13 +24,11 @@ function createGameboardCoords() {
   const letterCoords = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
   const numberCoords = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
   const coords = []
-  let count = 0;
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
       const element = {}
       element.name = letterCoords[i].concat(numberCoords[j])
       element.value = null
-      appendPlayerCoordinateDivs(element.name, count++)
       coords.push(element)
     }
   }
@@ -122,6 +121,15 @@ function Player() {
 }
 
 function Computer() {
+  function getComputerAttack(myGameboard) {
+    const guess = Math.floor(Math.random() * 100)
+    if (
+      myGameboard.coordinates[guess].value === 'missed' ||
+      myGameboard.coordinates[guess].value === 'hit'
+    ) {
+      getComputerAttack()
+    } else return myGameboard.coordinates[guess].name
+  }
   return {
     attack: (myGameboard) => {
       const guess = getComputerAttack(myGameboard)
@@ -129,33 +137,25 @@ function Computer() {
     },
   }
 }
-
-function getComputerAttack() {
-  const guess = Math.floor(Math.random() * 100)
-  if (
-    myGameboard.coordinates[guess].value === 'missed' ||
-    myGameboard.coordinates[guess].value === 'hit'
-  ) {
-    getComputerAttack()
-  } else return myGameboard.coordinates[guess].name
+function togglePlayers(activePlayer, player, computer) {
+  activePlayer === player ? computer : player
 }
 
-const myGameboard = Gameboard()
-// const enemyGameboard = Gameboard()
-// const computer = Computer()
-// myGameboard.placeShip('submarine', 'a4')
-// myGameboard.placeShip('destroyer', 'c4')
-// myGameboard.placeShip('battleship', 'c10')
-// myGameboard.placeShip('carrier', 'i8')
-// myGameboard.receiveAttack('a5')
-// myGameboard.receiveAttack('a4')
-// myGameboard.receiveAttack('a2')
-// myGameboard.receiveAttack('a1')
-// myGameboard.receiveAttack('b2')
-// console.log(myGameboard.checkIfAllShipsAreSunk())
-// computer.attack(myGameboard)
-// console.log(myGameboard.coordinates)
-
+function Game() {
+  const player = Player()
+  const playerGameboard = Gameboard()
+  const computer = Computer()
+  const computerGameboard = Gameboard()
+  let activePlayer = player
+  playerGameboard.placeShip('carrier', 'b5')
+  playerGameboard.placeShip('battleship', 'd9')
+  playerGameboard.placeShip('submarine', 'i7')
+  playerGameboard.placeShip('destroyer', 'g2')
+  computer.attack(playerGameboard)
+  createCoordinateDivs(playerGameboard.coordinates, true)
+  createCoordinateDivs(computerGameboard.coordinates, false)
+}
+Game()
 module.exports = {
   Ship,
   identifyShip,
