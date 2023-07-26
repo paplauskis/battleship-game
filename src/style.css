@@ -26,8 +26,9 @@ body {
 }
 
 .info-div {
-  width: 300px;
+  width: 100%;
   text-align: center;
+  font-size: 1.5rem;
 }
 
 .gameboards-div {
@@ -40,12 +41,14 @@ body {
   flex-wrap: wrap;
   width: 500px;
   height: 500px;
-  border: 2px solid black;
+  border: 2px solid rgb(0, 0, 0);
 }
 
-.gameboard > div {
+.square-div {
   display: flex;
   justify-content: center;
   align-items: center;
-  outline: 1px solid rgb(223, 223, 223);
+  outline: 1px solid rgb(216, 216, 216);
+  color: rgb(216, 216, 216);
+  font-size: 0.7rem
 }
