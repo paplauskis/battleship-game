@@ -1,4 +1,4 @@
-const { identifyShip } = require('../src/index')
+const { identifyShip } = require('../src/gameboard')
 
 test('should correctly identify carrier ship', () => {
   const ship = identifyShip('carrier')

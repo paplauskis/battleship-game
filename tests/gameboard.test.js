@@ -1,4 +1,4 @@
-const { Gameboard } = require('../src/index')
+const { Gameboard } = require('../src/gameboard')
 
 test('should correctly place carrier on coordinates', () => {
   const gameboard = Gameboard()

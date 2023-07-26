@@ -1,4 +1,4 @@
-const { createGameboard } = require('../src/index')
+const { createGameboard } = require('../src/gameboard')
 
 const gameboard = createGameboard()
 

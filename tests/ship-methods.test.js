@@ -1,4 +1,4 @@
-const { Ship } = require('../src/index')
+const { Ship } = require('../src/gameboard')
 
 test('should correctly tack hits taken', () => {
   const myShip = Ship(3)

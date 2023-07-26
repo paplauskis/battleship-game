@@ -1,5 +1,5 @@
-const { Player, Computer, Gameboard } = require('../src/index')
-
+const { Gameboard } = require('../src/gameboard')
+const { Player, Computer } = require('../src/player-computer')
 test("player can attack computer's gameboard", () => {
   const computerGameboard = Gameboard()
   const player = Player()
