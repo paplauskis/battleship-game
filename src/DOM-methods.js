@@ -5,7 +5,7 @@ const {
   Gameboard,
   Player,
   Computer,
-} = require('./index')
+} = require('./gameboard')
 
 const playerGameboardDiv = document.querySelector('.player-gameboard')
 const computerGameboardDiv = document.querySelector('.computer-gameboard')
@@ -19,7 +19,11 @@ function createCoordinateDivs(coordinates, isPlayer) {
     div.textContent = `${coord.name}`
     div.name = coord.name
     div.value = coord.value
-    div.classList.add(i++, isPlayer ? 'player-div' : 'computer-div', 'square-div')
+    div.classList.add(
+      i++,
+      isPlayer ? 'player-div' : 'computer-div',
+      'square-div'
+    )
     if (!isPlayer) addClickEvents(div)
     isPlayer ? playerGameboardDiv.append(div) : computerGameboardDiv.append(div)
   })
