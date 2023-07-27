@@ -1,3 +1,5 @@
+const { createGameboardCoords } = require('./helper-functions')
+
 function Ship(length) {
   let hitsTaken = 0
 
@@ -17,21 +19,6 @@ function Ship(length) {
   }
 }
 
-function createGameboardCoords() {
-  const letterCoords = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
-  const numberCoords = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-  const coords = []
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      const element = {}
-      element.name = letterCoords[i].concat(numberCoords[j])
-      element.value = null
-      coords.push(element)
-    }
-  }
-  return coords
-}
-
 function identifyShip(shipType) {
   return shipType.toLowerCase() === 'carrier'
     ? Ship(5)
@@ -49,14 +36,7 @@ function Gameboard() {
 
   const placeShip = (shipType, coord) => {
     const ship = identifyShip(shipType)
-
-    if (checkIfShipFits(ship, coord)) {
-      placeShipOnCoordinate(ship, coord)
-    } else console.log("ship doesn't fit in desired coordinate")
-  }
-
-  const checkIfShipFits = (ship, coord) => {
-    return ship.length <= coord.substring(1)
+    placeShipOnCoordinate(ship, coord)
   }
 
   const placeShipOnCoordinate = (ship, coord, placedCells = 0) => {
@@ -80,9 +60,9 @@ function Gameboard() {
     }
   }
 
-  function searchForCoordinate(chosenCoord) {
+  const searchForCoordinate = (chosenCoord) => {
     for (let i = 0; i < coordinates.length; i++) {
-      if (chosenCoord === coordinates[i].name) return coordinates[i]
+      if (chosenCoord == coordinates[i].name) return coordinates[i]
     }
   }
 
@@ -106,7 +86,12 @@ function Gameboard() {
     return remainingShipCoords === 0
   }
 
-  return { placeShip, coordinates, receiveAttack, checkIfAllShipsAreSunk }
+  return {
+    placeShip,
+    coordinates,
+    receiveAttack,
+    checkIfAllShipsAreSunk,
+  }
 }
 
 module.exports = {
