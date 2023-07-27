@@ -1,9 +1,19 @@
 const { Ship, Gameboard } = require('./gameboard')
 const { createCoordinateDivs } = require('./DOM-methods')
 const { Player, Computer } = require('./player-computer')
+const { selectLetterCoord, selectRandomNumber } = require('./helper-functions')
 
 function togglePlayers(activePlayer, player, computer) {
   activePlayer === player ? computer : player
+}
+
+function placeShipsOnCoords(gameboard) {
+  const letters = selectLetterCoord()
+  const numbers = selectRandomNumber()
+  gameboard.placeShip('carrier', letters[0] + numbers[0])
+  gameboard.placeShip('battleship', letters[1] + numbers[1])
+  gameboard.placeShip('submarine', letters[2] + numbers[2])
+  gameboard.placeShip('destroyer', letters[3] + numbers[3])
 }
 
 function Game() {
@@ -11,14 +21,11 @@ function Game() {
   const playerGameboard = Gameboard()
   const computer = Computer()
   const computerGameboard = Gameboard()
-  let activePlayer = player
-  playerGameboard.placeShip('carrier', 'b5')
-  playerGameboard.placeShip('battleship', 'd9')
-  playerGameboard.placeShip('submarine', 'i7')
-  playerGameboard.placeShip('destroyer', 'g2')
-  computer.attack(playerGameboard)
   createCoordinateDivs(playerGameboard.coordinates, true)
   createCoordinateDivs(computerGameboard.coordinates, false)
+  let activePlayer = player
+  placeShipsOnCoords(computerGameboard)
+  placeShipsOnCoords(playerGameboard)
 }
 
-module.exports = { Game }
+module.exports = { Game, selectRandomNumber }
