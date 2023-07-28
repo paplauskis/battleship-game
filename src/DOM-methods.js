@@ -1,15 +1,8 @@
-const {
-  Ship,
-  identifyShip,
-  createGameboard: createGameboardCoords,
-  Gameboard,
-  Player,
-  Computer,
-} = require('./gameboard')
-
 const playerGameboardDiv = document.querySelector('.player-gameboard')
 const computerGameboardDiv = document.querySelector('.computer-gameboard')
 const infoDiv = document.querySelector('.info-div')
+const playerDivArray = []
+const computerDivArray = []
 
 function createCoordinateDivs(coordinates, isPlayer) {
   coordinates.forEach((coord, i = 0) => {
@@ -19,6 +12,7 @@ function createCoordinateDivs(coordinates, isPlayer) {
     div.textContent = `${coord.name}`
     div.name = coord.name
     div.value = coord.value
+    isPlayer ? playerDivArray.push(div.name) : computerDivArray.push(div.name)
     div.classList.add(
       i++,
       isPlayer ? 'player-div' : 'computer-div',
@@ -31,8 +25,21 @@ function createCoordinateDivs(coordinates, isPlayer) {
 
 function addClickEvents(div) {
   div.addEventListener('click', () => {
-    console.log(div.name)
+    console.log(getDivInfo(div))
   })
 }
 
-module.exports = { createCoordinateDivs }
+function getDivInfo(div) {
+  div.value === null
+    ? (div.style.backgroundColor = 'green')
+    : (div.style.backgroundColor = 'red')
+  return div
+}
+
+module.exports = {
+  createCoordinateDivs,
+  addClickEvents,
+  playerDivArray,
+  computerDivArray,
+  computerGameboardDiv,
+}
