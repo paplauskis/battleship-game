@@ -11,14 +11,22 @@ const newGameBtn = document.querySelector('.new-game')
 
 endDisplay.style.display = 'none'
 
-const player = Player()
-const playerGameboard = Gameboard()
-const computer = Computer()
-const computerGameboard = Gameboard()
-placeShipsOnCoords(computerGameboard)
-placeShipsOnCoords(playerGameboard)
-createCoordinateDivs(playerGameboard.coordinates, true)
-createCoordinateDivs(computerGameboard.coordinates, false)
+function Game() {
+  const player = Player()
+  const playerGameboard = Gameboard()
+  const computer = Computer()
+  const computerGameboard = Gameboard()
+  placeShipsOnCoords(computerGameboard)
+  placeShipsOnCoords(playerGameboard)
+  createCoordinateDivs(playerGameboard.coordinates, true)
+  createCoordinateDivs(computerGameboard.coordinates, false)
+  endDisplay.style.display = 'none'
+
+  return { player, computer, playerGameboard, computerGameboard }
+}
+
+let newGame = Game()
+
 
 function placeShipsOnCoords(gameboard) {
   const letters = selectLetterCoord()
@@ -37,7 +45,6 @@ function createCoordinateDivs(coordinates, isPlayer) {
     div.name = coord.name
     div.value = coord.value
     if (div.value !== null && isPlayer) div.style.backgroundColor = 'grey'
-    isPlayer ? playerDivArray.push(div.name) : computerDivArray.push(div.name)
     div.classList.add(
       i++,
       isPlayer ? 'player-div' : 'computer-div',
@@ -58,33 +65,34 @@ function handleClick(div) {
   div.value === null
     ? (div.style.backgroundColor = 'lightblue')
     : (div.style.backgroundColor = 'red')
-  player.attack(computerGameboard, div.name)
-  if (computerGameboard.checkIfAllShipsAreSunk()) {
+  newGame.player.attack(newGame.computerGameboard, div.name)
+  if (newGame.computerGameboard.checkIfAllShipsAreSunk()) {
     setTimeout(() => (endDisplay.style.display = 'block'), 300)
     showResults(true)
   }
-  setTimeout(computerAttack, 100)
+  
+  setTimeout(computerAttack, 1000)
 }
 
 function computerAttack() {
   const randomCoord = Math.floor(Math.random() * 100)
   if (
-    playerGameboard.coordinates[randomCoord].value === 'hit' ||
-    playerGameboard.coordinates[randomCoord].value === 'missed'
+    newGame.playerGameboard.coordinates[randomCoord].value === 'hit' ||
+    newGame.playerGameboard.coordinates[randomCoord].value === 'missed'
   ) {
     computerAttack()
   } else {
-    playerGameboard.coordinates[randomCoord].value === null
+    newGame.playerGameboard.coordinates[randomCoord].value === null
       ? (playerGameboardDiv.children[randomCoord].style.backgroundColor =
           'lightblue')
       : (playerGameboardDiv.children[randomCoord].style.backgroundColor = 'red')
-    computer.attack(
-      playerGameboard,
-      playerGameboard.coordinates[randomCoord].name
+    newGame.computer.attack(
+      newGame.playerGameboard,
+      newGame.playerGameboard.coordinates[randomCoord].name
     )
   }
 
-  if (playerGameboard.checkIfAllShipsAreSunk()) {
+  if (newGame.playerGameboard.checkIfAllShipsAreSunk()) {
     endDisplay.style.display = 'absolute'
     showResults(false)
   }
@@ -95,8 +103,15 @@ function showResults(isPlayer) {
   winnerDiv.textContent = winner
 }
 
-function Game() {}
+function resetGame() {
+  const divs = document.querySelectorAll('.square-div')
+  const divsArray = [...divs]
+  divsArray.forEach((div) => div.remove())
+  newGame = Game()
+  endDisplay.style.display = 'none'
+}
 
-// newGameBtn.addEventListener('click', resetGame)
+newGameBtn.addEventListener('click', resetGame)
+console.log(newGame.computerGameboard.coordinates)
 
-module.exports = { Game, selectRandomNumber }
+// module.exports = { Game }
