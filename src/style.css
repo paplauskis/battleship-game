@@ -59,7 +59,7 @@ body {
   align-items: center;
   outline: 1px solid rgb(216, 216, 216);
   color: transparent;
-  font-size: 0.7rem
+  font-size: 0.7rem;
 }
 
 .blur-div {
@@ -71,8 +71,9 @@ body {
 }
 
 .end-div {
-  top: 50%; right: 50%;
-  transform: translate(50%,-50%);
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
   position: absolute;
   width: 500px;
   height: 300px;
@@ -96,4 +97,9 @@ body {
   text-align: center;
   margin-top: 50px;
   font-size: 1.8rem;
+  font-family: 'Handjet';
+}
+
+.info-div {
+  font-family: 'Handjet';
 }
