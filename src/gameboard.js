@@ -70,7 +70,11 @@ function Gameboard() {
     const attackedCoord = searchForCoordinate(chosenCoord)
     if (attackedCoord.value === null) {
       attackedCoord.value = 'missed'
-    } else if (typeof attackedCoord.value === 'object') {
+    } else if (
+      attackedCoord.value !== 'hit' &&
+      attackedCoord.value !== 'missed' &&
+      attackedCoord.value !== null
+    ) {
       attackedCoord.value.hit()
       if (attackedCoord.value.isSunk()) console.log('Ship has been sunk')
       attackedCoord.value = 'hit'
@@ -78,13 +82,9 @@ function Gameboard() {
   }
 
   const checkIfAllShipsAreSunk = () => {
-    let remainingShipCoords = 0
-    coordinates.forEach((item) => {
-      if (typeof item.value === 'object' && item.value !== null)
-        remainingShipCoords++
-    })
-    return remainingShipCoords === 0
-  }
+    return coordinates.every((item) =>
+      item.value === 'hit' || item.value === 'missed' || item.value === null)
+    }
 
   return {
     placeShip,
