@@ -9,8 +9,6 @@ const endDisplay = document.querySelector('.blur-div')
 const winnerDiv = document.querySelector('.winner')
 const newGameBtn = document.querySelector('.new-game')
 
-let gameOver = false
-let playerTurn = true
 endDisplay.style.display = 'none'
 
 const player = Player()
@@ -18,13 +16,9 @@ const playerGameboard = Gameboard()
 const computer = Computer()
 const computerGameboard = Gameboard()
 placeShipsOnCoords(computerGameboard)
-placeShipsOnCoords(playerGameboard)  
+placeShipsOnCoords(playerGameboard)
 createCoordinateDivs(playerGameboard.coordinates, true)
 createCoordinateDivs(computerGameboard.coordinates, false)
-
-function toggleTurn() {
-  playerTurn ? playerTurn = false : playerTurn = true
-}
 
 function placeShipsOnCoords(gameboard) {
   const letters = selectLetterCoord()
@@ -40,10 +34,10 @@ function createCoordinateDivs(coordinates, isPlayer) {
     const div = document.createElement('div')
     div.style.width = `${playerGameboardDiv.clientWidth / 10}px`
     div.style.height = `${playerGameboardDiv.clientHeight / 10}px`
-    div.textContent = `${coord.name}`
     div.name = coord.name
     div.value = coord.value
-    // isPlayer ? playerDivArray.push(div.name) : computerDivArray.push(div.name)
+    if (div.value !== null && isPlayer) div.style.backgroundColor = 'grey'
+    isPlayer ? playerDivArray.push(div.name) : computerDivArray.push(div.name)
     div.classList.add(
       i++,
       isPlayer ? 'player-div' : 'computer-div',
@@ -62,25 +56,47 @@ function addClickEvents(div) {
 
 function handleClick(div) {
   div.value === null
-    ? (div.style.backgroundColor = 'green')
+    ? (div.style.backgroundColor = 'lightblue')
     : (div.style.backgroundColor = 'red')
-  console.log(div.name)
   player.attack(computerGameboard, div.name)
-  console.log(computerGameboard.checkIfAllShipsAreSunk())
+  if (computerGameboard.checkIfAllShipsAreSunk()) {
+    setTimeout(() => (endDisplay.style.display = 'block'), 300)
+    showResults(true)
+  }
+  setTimeout(computerAttack, 100)
 }
 
-function showResults() {
-  const winner = computerGameboard.checkIfAllShipsAreSunk() ? 'Player wins!' : 'Computer wins!'
-  const endDiv = document.createElement('div') 
-  endDiv.classList.add('end-div')
-  
+function computerAttack() {
+  const randomCoord = Math.floor(Math.random() * 100)
+  if (
+    playerGameboard.coordinates[randomCoord].value === 'hit' ||
+    playerGameboard.coordinates[randomCoord].value === 'missed'
+  ) {
+    computerAttack()
+  } else {
+    playerGameboard.coordinates[randomCoord].value === null
+      ? (playerGameboardDiv.children[randomCoord].style.backgroundColor =
+          'lightblue')
+      : (playerGameboardDiv.children[randomCoord].style.backgroundColor = 'red')
+    computer.attack(
+      playerGameboard,
+      playerGameboard.coordinates[randomCoord].name
+    )
+  }
 
-
+  if (playerGameboard.checkIfAllShipsAreSunk()) {
+    endDisplay.style.display = 'absolute'
+    showResults(false)
+  }
 }
 
-function Game() {
- 
-
+function showResults(isPlayer) {
+  const winner = isPlayer ? 'Player wins!' : 'Computer wins!'
+  winnerDiv.textContent = winner
 }
+
+function Game() {}
+
+// newGameBtn.addEventListener('click', resetGame)
 
 module.exports = { Game, selectRandomNumber }
