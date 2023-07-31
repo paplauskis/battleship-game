@@ -16,8 +16,8 @@ function selectLetterCoord() {
 }
 
 function selectRandomNumber() {
-  const carrierCoord = (Math.floor(Math.random() * 5) + 5).toString()
-  const battleshipCoord = (Math.floor(Math.random() * 5) + 4).toString()
+  const carrierCoord = (Math.floor(Math.random() * 5) + 6).toString()
+  const battleshipCoord = (Math.floor(Math.random() * 5) + 5).toString()
   const submarineCoord = (Math.floor(Math.random() * 5) + 3).toString()
   const destroyerCoord = (Math.floor(Math.random() * 5) + 2).toString()
   return [carrierCoord, battleshipCoord, submarineCoord, destroyerCoord]
