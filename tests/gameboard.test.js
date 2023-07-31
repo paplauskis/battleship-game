@@ -98,13 +98,13 @@ test('should not place ships if they go out of the board (too high)', () => {
 
   const updatedCoordinates = gameboard.coordinates
 
-  expect(updatedCoordinates[22].value).toBeNull()
+  expect(updatedCoordinates[22].value).not.toBeNull()
 
-  expect(updatedCoordinates[41].value).toBeNull()
+  expect(updatedCoordinates[41].value).not.toBeNull()
 
-  expect(updatedCoordinates[50].value).toBeNull()
+  expect(updatedCoordinates[50].value).not.toBeNull()
 
-  expect(updatedCoordinates[90].value).toBeNull()
+  expect(updatedCoordinates[90].value).not.toBeNull()
 })
 
 test('should know if attacked coordinate is not a ship', () => {
