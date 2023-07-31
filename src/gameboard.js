@@ -70,21 +70,16 @@ function Gameboard() {
     const attackedCoord = searchForCoordinate(chosenCoord)
     if (attackedCoord.value === null) {
       attackedCoord.value = 'missed'
-    } else if (
-      attackedCoord.value !== 'hit' &&
-      attackedCoord.value !== 'missed' &&
-      attackedCoord.value !== null
-    ) {
+    } else {
       attackedCoord.value.hit()
-      if (attackedCoord.value.isSunk()) console.log('Ship has been sunk')
       attackedCoord.value = 'hit'
-    } else console.log('Cannot hit the same coordinate twice!')
+    }
   }
 
   const checkIfAllShipsAreSunk = () => {
     return coordinates.every((item) =>
       item.value === 'hit' || item.value === 'missed' || item.value === null)
-    }
+  }
 
   return {
     placeShip,
