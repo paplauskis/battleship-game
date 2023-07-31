@@ -8,7 +8,7 @@ const infoDiv = document.querySelector('.info-div')
 const endDisplay = document.querySelector('.blur-div')
 const winnerDiv = document.querySelector('.winner')
 const newGameBtn = document.querySelector('.new-game')
-
+infoDiv.textContent = "Player's turn"
 endDisplay.style.display = 'none'
 
 function Game() {
@@ -26,7 +26,6 @@ function Game() {
 }
 
 let newGame = Game()
-
 
 function placeShipsOnCoords(gameboard) {
   const letters = selectLetterCoord()
@@ -62,6 +61,7 @@ function addClickEvents(div) {
 }
 
 function handleClick(div) {
+  infoDiv.textContent = "Computer's turn"
   div.value === null
     ? (div.style.backgroundColor = 'lightblue')
     : (div.style.backgroundColor = 'red')
@@ -70,7 +70,7 @@ function handleClick(div) {
     setTimeout(() => (endDisplay.style.display = 'block'), 300)
     showResults(true)
   }
-  
+  div.replaceWith(div.cloneNode(true))
   setTimeout(computerAttack, 1000)
 }
 
@@ -91,7 +91,7 @@ function computerAttack() {
       newGame.playerGameboard.coordinates[randomCoord].name
     )
   }
-
+  infoDiv.textContent = "Player's turn"
   if (newGame.playerGameboard.checkIfAllShipsAreSunk()) {
     endDisplay.style.display = 'absolute'
     showResults(false)
@@ -112,6 +112,3 @@ function resetGame() {
 }
 
 newGameBtn.addEventListener('click', resetGame)
-console.log(newGame.computerGameboard.coordinates)
-
-// module.exports = { Game }
